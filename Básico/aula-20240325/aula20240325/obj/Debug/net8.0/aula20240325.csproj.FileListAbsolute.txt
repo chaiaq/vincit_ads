@@ -1,0 +1,15 @@
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\bin\Debug\net8.0\aula20240325.exe
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\bin\Debug\net8.0\aula20240325.deps.json
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\bin\Debug\net8.0\aula20240325.runtimeconfig.json
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\bin\Debug\net8.0\aula20240325.dll
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\bin\Debug\net8.0\aula20240325.pdb
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\aula20240325.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\aula20240325.AssemblyInfoInputs.cache
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\aula20240325.AssemblyInfo.cs
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\aula20240325.csproj.CoreCompileInputs.cache
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\aula20240325.sourcelink.json
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\aula20240325.dll
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\refint\aula20240325.dll
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\aula20240325.pdb
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\aula20240325.genruntimeconfig.cache
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240325\aula20240325\obj\Debug\net8.0\ref\aula20240325.dll

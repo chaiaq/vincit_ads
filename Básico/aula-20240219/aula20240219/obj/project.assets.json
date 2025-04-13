@@ -1,0 +1,66 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {}
+  },
+  "libraries": {},
+  "projectFileDependencyGroups": {
+    "net8.0": []
+  },
+  "packageFolders": {
+    "C:\\Users\\chaia\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\chaia\\Downloads\\PROGRAMAÇÃO\\VINCIT\\aula-20240219\\aula20240219\\aula20240219.csproj",
+      "projectName": "aula20240219",
+      "projectPath": "C:\\Users\\chaia\\Downloads\\PROGRAMAÇÃO\\VINCIT\\aula-20240219\\aula20240219\\aula20240219.csproj",
+      "packagesPath": "C:\\Users\\chaia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\chaia\\Downloads\\PROGRAMAÇÃO\\VINCIT\\aula-20240219\\aula20240219\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\chaia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

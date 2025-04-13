@@ -1,0 +1,14 @@
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\bin\Debug\net8.0\aula20240206.exe
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\bin\Debug\net8.0\aula20240206.deps.json
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\bin\Debug\net8.0\aula20240206.runtimeconfig.json
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\bin\Debug\net8.0\aula20240206.dll
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\bin\Debug\net8.0\aula20240206.pdb
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\obj\Debug\net8.0\aula20240206.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\obj\Debug\net8.0\aula20240206.AssemblyInfoInputs.cache
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\obj\Debug\net8.0\aula20240206.AssemblyInfo.cs
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\obj\Debug\net8.0\aula20240206.csproj.CoreCompileInputs.cache
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\obj\Debug\net8.0\aula20240206.dll
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\obj\Debug\net8.0\refint\aula20240206.dll
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\obj\Debug\net8.0\aula20240206.pdb
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\obj\Debug\net8.0\aula20240206.genruntimeconfig.cache
+C:\Users\chaia\Downloads\PROGRAMAÇÃO\VINCIT\aula-20240205\aula20240206\obj\Debug\net8.0\ref\aula20240206.dll
