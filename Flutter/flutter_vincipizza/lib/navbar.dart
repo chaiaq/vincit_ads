@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Navbar extends StatelessWidget {
   const Navbar({super.key});
@@ -30,7 +31,9 @@ class Navbar extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, "/");
+                    },
                     leading: Icon(Icons.local_pizza, color: Colors.white),
                     title: Text(
                       "Cardápio",
@@ -38,7 +41,9 @@ class Navbar extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, "/contato");
+                    },
                     leading: Icon(Icons.contacts_rounded, color: Colors.white),
                     title: Text(
                       "Contato",
@@ -58,7 +63,9 @@ class Navbar extends StatelessWidget {
                 color: const Color.fromARGB(255, 52, 0, 0),
               ),
               child: ListTile(
-                onTap: () {},
+                onTap: () {
+                  SystemNavigator.pop();
+                },
                 leading: Icon(Icons.exit_to_app, color: Colors.white),
                 title: Text(
                   "Sair",

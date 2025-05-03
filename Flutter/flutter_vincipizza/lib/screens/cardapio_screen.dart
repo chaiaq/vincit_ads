@@ -1,5 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_vincipizza/models/pedido.dart';
+import 'package:flutter_vincipizza/models/pedido_item.dart';
+import 'package:flutter_vincipizza/models/produto.dart';
+import 'package:flutter_vincipizza/models/produto_tamanho.dart';
 import 'package:flutter_vincipizza/navbar.dart';
+import 'package:flutter_vincipizza/screens/pedido_screen.dart';
+import 'package:intl/intl.dart';
 
 class CardapioScreen extends StatefulWidget {
   const CardapioScreen({super.key});
@@ -12,8 +21,20 @@ class _CardapioScreenState extends State<CardapioScreen> {
   // VARIAVEL PARA CONTROLAR A VISIBILIDADE DO CARRINHO
   bool carrinhoVisivel = false;
 
+  List<Produto> produtos = [];
+  Pedido pedido = Pedido(itens: []);
+  // VARIAVEL PARA FORMATAR O NÚMERO PARA PT-BR
+  final oCcy = NumberFormat("#,##0.00", "pt_BR");
+
   @override
   Widget build(BuildContext context) {
+    // CHAMANDO OS PRODUTOS PARA O CARDÁPIO
+    carregarProdutos().then((value) {
+      setState(() {
+        produtos = value;
+      });
+    });
+
     // TAB CONTROLLER CONTROLA O ESTADO DAS ABAS
     return DefaultTabController(
       length: 3,
@@ -75,36 +96,47 @@ class _CardapioScreenState extends State<CardapioScreen> {
       padding: const EdgeInsets.all(5.0),
       child: TabBarView(
         children: [
+          // ABA DE PIZZAS
           abaComScroll(
-            // ABA DE PIZZAS
             Column(
               spacing: 10,
-              children: [
-                construtorItemCardapio(),
-                construtorItemCardapio(),
-                construtorItemCardapio(),
-                construtorItemCardapio(),
-                construtorItemCardapio(),
-                construtorItemCardapio(),
-                construtorItemCardapio(),
-                construtorItemCardapio(),
-                construtorItemCardapio(),
-              ],
+              children:
+                  produtos
+                      .where((produto) => produto.categoria == "pizza")
+                      .map((produto) => construtorItemCardapio(produto))
+                      .toList(),
             ),
           ),
           // ABA DE BEBIDAS
-          Column(),
+          abaComScroll(
+            Column(
+              spacing: 10,
+              children:
+                  produtos
+                      .where((produto) => produto.categoria == "bebida")
+                      .map((produto) => construtorItemCardapio(produto))
+                      .toList(),
+            ),
+          ),
           // ABA DE SOBREMESAS
-          Column(),
+          abaComScroll(
+            Column(
+              spacing: 10,
+              children:
+                  produtos
+                      .where((produto) => produto.categoria == "sobremesa")
+                      .map((produto) => construtorItemCardapio(produto))
+                      .toList(),
+            ),
+          ),
         ],
       ),
     );
   }
 
   // FUNÇÃO PARA CONSTRUIR CADA ITEM DO CARDÁPIO
-  Widget construtorItemCardapio() {
+  Widget construtorItemCardapio(Produto produto) {
     return Container(
-      height: 100,
       decoration: BoxDecoration(
         color: const Color.fromARGB(130, 0, 0, 0),
         border: Border.all(color: Colors.white, width: 1),
@@ -118,10 +150,11 @@ class _CardapioScreenState extends State<CardapioScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
+                height: 80,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                      "assets/images/cardapio/pizza-margherita.jpg",
+                      "assets/images/cardapio/${produto.imagem}",
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -144,11 +177,18 @@ class _CardapioScreenState extends State<CardapioScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // NOME DO ITEM
-                    Text("Pizza Margherita", style: TextStyle(fontSize: 18)),
+                    Text(
+                      produto.descricao!,
+                      style: TextStyle(fontSize: 18),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     // DESCRIÇÃO
                     Text(
-                      "Molho de tomate, mussarela, manjericão fresco, azeite de oliva.",
+                      produto.ingredientes!,
                       style: TextStyle(fontSize: 12),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
@@ -159,7 +199,20 @@ class _CardapioScreenState extends State<CardapioScreen> {
           Expanded(
             flex: 1,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                var resultado = retonarTamanho(context, produto);
+                resultado.then((tamanho) {
+                  if (tamanho != null) {
+                    var pedidoItem = PedidoItem(
+                      produto: produto,
+                      produtoTamanho: tamanho,
+                      quantidade: 1,
+                      total: tamanho.valor,
+                    );
+                    setState(() => pedido.itens!.add(pedidoItem));
+                  }
+                });
+              },
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -187,7 +240,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
     // VISIBILITY CONTROLA QUANDO O CARRINHO É VISÍVEL
     return Visibility(
       // LIGA O VISIBILITY A VARIAVEL DE CONTROLE
-      visible: carrinhoVisivel,
+      visible: pedido.itens!.isNotEmpty && carrinhoVisivel,
       child: Container(
         height: 400,
         decoration: BoxDecoration(
@@ -207,13 +260,13 @@ class _CardapioScreenState extends State<CardapioScreen> {
                 flex: 2,
                 child: SingleChildScrollView(
                   child: Column(
-                    children: [
-                      construtorCarrinhoItem(),
-                      construtorCarrinhoItem(),
-                      construtorCarrinhoItem(),
-                      construtorCarrinhoItem(),
-                      construtorCarrinhoItem(),
-                    ],
+                    children:
+                        pedido.itens!
+                            .map(
+                              (PedidoItem) =>
+                                  construtorCarrinhoItem(PedidoItem),
+                            )
+                            .toList(),
                   ),
                 ),
               ),
@@ -221,18 +274,19 @@ class _CardapioScreenState extends State<CardapioScreen> {
               Expanded(
                 flex: 1,
                 child: Column(
-                  spacing: 5,
                   children: [
-                    botaoCarrinho(
-                      "ADICIONAR MAIS ITENS",
-                      () {},
-                      heroTag: "cardapio.adicionaritens",
-                    ),
-                    botaoCarrinho(
-                      "FINALIZAR PEDIDO",
-                      () {},
-                      heroTag: "cardapio.finalizar",
-                    ),
+                    botaoCarrinho("ADICIONAR MAIS ITENS", () {
+                      setState(() => carrinhoVisivel = false);
+                    }),
+                    botaoCarrinho("FINALIZAR PEDIDO", () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PedidoScreen(),
+                          settings: RouteSettings(arguments: pedido),
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -246,16 +300,17 @@ class _CardapioScreenState extends State<CardapioScreen> {
   // personalizado: FUNÇÃO PARA PERSONALIZAR OS BOTÕES
   Widget botaoCarrinho(
     String texto,
-    VoidCallback onPressed, {
     // FUNÇÃO QUE NÃO RETORNA NADA 'VOID'
-    String? heroTag,
-  }) {
+    VoidCallback onPressed,
+  ) {
     return SizedBox(
       width: double.infinity,
-      child: FloatingActionButton(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 77, 5, 0),
+          textStyle: TextStyle(color: Colors.white),
+        ),
         onPressed: onPressed,
-        heroTag: heroTag,
-        backgroundColor: const Color.fromARGB(255, 72, 0, 0),
         child: Text(
           texto,
           style: TextStyle(
@@ -269,7 +324,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
   }
 
   // FUNÇÃO PARA CONSTRUIR OS ITENS DO CARRINHO
-  Widget construtorCarrinhoItem() {
+  Widget construtorCarrinhoItem(PedidoItem item) {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: Container(
@@ -294,7 +349,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
                     Row(
                       children: [
                         Text(
-                          "Pizza Margherita",
+                          item.produto!.descricao!,
                           style: TextStyle(fontSize: 18),
                         ),
                       ],
@@ -304,14 +359,14 @@ class _CardapioScreenState extends State<CardapioScreen> {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            "Tamanho: Família",
+                            item.produtoTamanho!.descricao!,
                             style: TextStyle(fontSize: 10),
                           ),
                         ),
                         Expanded(
                           flex: 1,
                           child: Text(
-                            "Quantidade: 2",
+                            "Quantidade: ${item.quantidade}",
                             style: TextStyle(fontSize: 15),
                           ),
                         ),
@@ -324,7 +379,16 @@ class _CardapioScreenState extends State<CardapioScreen> {
               Expanded(
                 flex: 1,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      int quantidadePedido = item.quantidade! + 1;
+                      double valor = item.produtoTamanho!.valor!;
+                      double total = quantidadePedido * valor;
+
+                      item.quantidade = quantidadePedido;
+                      item.total = total;
+                    });
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -338,7 +402,25 @@ class _CardapioScreenState extends State<CardapioScreen> {
               Expanded(
                 flex: 1,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      int quantidadePedido = item.quantidade! - 1;
+
+                      if (quantidadePedido > 0) {
+                        double valor = item.produtoTamanho!.valor!;
+                        double total = quantidadePedido * valor;
+
+                        item.quantidade = quantidadePedido;
+                        item.total = total;
+                      } else {
+                        pedido.itens!.remove(item);
+
+                        if (pedido.itens!.isEmpty) {
+                          carrinhoVisivel = false;
+                        }
+                      }
+                    });
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -358,7 +440,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
   // FUNÇÃO PARA CONSTRUIR O PREVIEW DO CARRINHO
   Widget previewCarrinho() {
     return Visibility(
-      visible: !carrinhoVisivel,
+      visible: pedido.itens!.isNotEmpty && !carrinhoVisivel,
       child: GestureDetector(
         onTap: () {
           setState(() => carrinhoVisivel = true);
@@ -378,5 +460,63 @@ class _CardapioScreenState extends State<CardapioScreen> {
         ),
       ),
     );
+  }
+
+  // FUNÇÃO PARA MOSTRAR AS OPÇÕES DE TAMANHO
+  Future<ProdutoTamanho?> retonarTamanho(
+    // O FUTURE RETORNA ALGO QUE ELE AINDA ESPERA QUE VAI ACONTECER
+    // NESTE CASO A ESCOLHA DO TAMANHO PELO USUÁRIO
+    BuildContext context,
+    Produto produto,
+  ) async {
+    List<ProdutoTamanho> tamanhos = produto.tamanhos!;
+
+    return await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.black,
+          title: Text(
+            produto.descricao!,
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+          content: Text(
+            "Escolha um tamanho:",
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+          actions:
+              tamanhos.map((tamanho) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                    ),
+                    onPressed: () => Navigator.of(context).pop(tamanho),
+                    child: Text(
+                      "${tamanho.descricao} (R\$ ${oCcy.format(tamanho.valor)})",
+                    ),
+                  ),
+                );
+              }).toList(),
+        );
+      },
+    );
+  }
+
+  // FUNÇÃO PARA CHAMAR OS PRODUTOS DO JSON
+  Future<List<Produto>> carregarProdutos() async {
+    String jsonString = await rootBundle.loadString(
+      "assets/data/produtos.json",
+    );
+
+    // DICIONÁRIO PARA ORGANIZAR OS DADOS
+    List<dynamic> jsonList = jsonDecode(jsonString);
+    List<Produto> resultado =
+        jsonList.map((json) => Produto.fromJson(json)).toList();
+
+    return resultado;
   }
 }

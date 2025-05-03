@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vincipizza/navbar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ContatoScreen extends StatelessWidget {
   const ContatoScreen({super.key});
@@ -14,12 +15,20 @@ class ContatoScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () async {
+              String url = "http://facebook.com";
+              await launchUrlString(url);
+            },
+            heroTag: "contato.facebook",
             backgroundColor: Colors.blueAccent,
             child: FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
           ),
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () async {
+              String url = "http://whatsapp.com";
+              await launchUrlString(url);
+            },
+            heroTag: "contato.whatsapp",
             backgroundColor: const Color.fromARGB(255, 36, 228, 30),
             child: FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white),
           ),
